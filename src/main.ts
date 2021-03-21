@@ -1,4 +1,4 @@
-import core from '@actions/core'
+import { getInput, setFailed, setOutput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 
 type Commit = {
@@ -8,13 +8,13 @@ type Commit = {
 
 async function main() {
     if (process.env.GITHUB_TOKEN === undefined) {
-        core.setFailed('env.GITHUB_TOKEN is not set')
+        setFailed('env.GITHUB_TOKEN is not set')
         return
     }
 
     let baseRef = ''
-    const headRef = core.getInput('head-ref')
-    const format = core.getInput('format')
+    const headRef = getInput('head-ref')
+    const format = getInput('format')
 
     const github = getOctokit(process.env.GITHUB_TOKEN)
     const { owner, repo } = context.repo
@@ -52,11 +52,11 @@ async function main() {
         )
         .then((commits) => {
             if (commits.length === 0) {
-                core.setFailed(`No commits found between refs ${baseRef}...${headRef}`)
+                setFailed(`No commits found between refs ${baseRef}...${headRef}`)
                 return
             }
 
-            core.setOutput('release_name', commits[0].subject)
+            setOutput('release_name', commits[0].subject)
 
             let releaseNotes = ''
             for (const commit of commits) {
@@ -67,9 +67,9 @@ async function main() {
                 releaseNotes += '%0A'
             }
 
-            core.setOutput('release_notes', releaseNotes)
+            setOutput('release_notes', releaseNotes)
         })
-        .catch((error) => core.setFailed(error.message))
+        .catch((error) => setFailed(error.message))
 }
 
 main()
