@@ -7,25 +7,6 @@ require('./sourcemap-register.js');module.exports =
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,18 +17,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__webpack_require__(186));
+const core_1 = __webpack_require__(186);
 const github_1 = __webpack_require__(438);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (process.env.GITHUB_TOKEN === undefined) {
-                core.setFailed('env.GITHUB_TOKEN is not set');
+                core_1.setFailed('env.GITHUB_TOKEN is not set');
                 return;
             }
             let baseRef = '';
-            const headRef = core.getInput('head-ref');
-            const format = core.getInput('format');
+            const headRef = core_1.getInput('head-ref');
+            const format = core_1.getInput('format');
             const github = github_1.getOctokit(process.env.GITHUB_TOKEN);
             const { owner, repo } = github_1.context.repo;
             return github.repos
@@ -77,24 +58,24 @@ function main() {
                 .reverse())
                 .then((commits) => {
                 if (commits.length === 0) {
-                    core.setFailed(`No commits found between refs ${baseRef}...${headRef}`);
+                    core_1.setFailed(`No commits found between refs ${baseRef}...${headRef}`);
                     return;
                 }
-                core.setOutput('release_name', commits[0].subject);
+                core_1.setOutput('release_name', commits[0].subject);
                 let releaseNotes = '';
                 for (const commit of commits) {
                     releaseNotes += format
                         .replace('{{author}}', commit.author)
                         .replace('{{subject}}', commit.subject)
                         .replace('{{message}}', commit.message);
-                    releaseNotes += '%0A';
+                    releaseNotes += '\n';
                 }
-                core.setOutput('release_notes', releaseNotes);
+                core_1.setOutput('release_notes', releaseNotes);
             })
-                .catch((error) => core.setFailed(error.message));
+                .catch((error) => core_1.setFailed(error.message));
         }
         catch (error) {
-            core.setFailed(error.message);
+            core_1.setFailed(error.message);
         }
     });
 }

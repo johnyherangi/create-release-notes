@@ -65,7 +65,7 @@ async function main() {
                         .replace('{{author}}', commit.author)
                         .replace('{{subject}}', commit.subject)
                         .replace('{{message}}', commit.message)
-                    releaseNotes += '%0A'
+                    releaseNotes += '\n'
                 }
 
                 setOutput('release_notes', releaseNotes)
