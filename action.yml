@@ -1,11 +1,19 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Release Notes'
+description: 'Generates release notes from commits between the latest tag and the branch HEAD.'
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  head-ref:
+    description: 'Custom head ref'
+    required: false
+    default: 'HEAD'
+  format:
+      description: 'Release note format'
+      required: false
+      default: '- {{subject}} by @{{author}}'
+outputs:
+  release_name:
+    description: 'Release name'
+  release_notes:
+    description: 'Release notes'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'dist/main.js'
