@@ -16,4 +16,4 @@ outputs:
     description: 'Release notes'
 runs:
   using: 'node12'
-  main: 'dist/main.js'
+  main: 'dist/index.js'
