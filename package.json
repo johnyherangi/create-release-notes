@@ -6,7 +6,7 @@
     "main": "lib/main.js",
     "scripts": {
         "build": "tsc",
-        "prettier": "prettier --write **/*.{css,js,json,md,ts}",
+        "prettier": "prettier --write **/*.{css,js,json,md,ts,yml}",
         "lint": "eslint src/**/*.{js,ts} --fix",
         "package": "ncc build --source-map --license licenses.txt",
         "test": "jest",
