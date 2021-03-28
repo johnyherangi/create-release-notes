@@ -13,6 +13,7 @@ This action compiles the commits between the latest release tag and a head ref i
 ### `format`
 
 **Optional** Release note format. Default is `- {{subject}} by @{{author}}`.
+> Usable commit values: `subject`, `author` and `message`
 
 ## Outputs
 
