@@ -1,7 +1,5 @@
 name: 'release-notes-action'
 description: 'Generates release notes from commits between the latest tag and the branch HEAD.'
-icon: 'align-left'
-color: 'purple'
 inputs:
     head-ref:
         description: 'Custom head ref'
