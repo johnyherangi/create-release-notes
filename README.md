@@ -2,13 +2,13 @@
 
 This action compiles the commits between the latest release tag and a head ref into release notes. For use with [actions/create-release](https://github.com/actions/create-release).
 
--   If no release tag exist, only the HEAD commit will be compiled.
+-   If no release tags exist, only the HEAD commit will be compiled.
 
 ## Inputs
 
 ### `head-ref`
 
-**Optional** Custom head ref. Default is the branch `HEAD`.
+**Optional** Custom head ref. Default is `HEAD`.
 
 ### `format`
 
@@ -18,18 +18,19 @@ This action compiles the commits between the latest release tag and a head ref i
 
 ### `release-notes`
 
-Multi-lined release notes.
+Multi-lined release notes e.g.
+```
+- Do more stuff (#2) by @johnyherangi
+- Do stuff (#1) by @johnyherangi
+```
 
 ## Example usage
 
 ```yaml
 - uses: johnyherangi/release-notes@master
   id: release_notes
-  with:
-      head-ref: ${{ github.head_ref }} # get commits between last release and the current branches HEAD
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# Create a release
 - uses: actions/create-release@v1
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
