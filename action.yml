@@ -1,4 +1,4 @@
-name: create-release-notes
+name: 'create-release-notes'
 description: 'Generates release notes from commits between the latest tag and the branch HEAD.'
 inputs:
     head-ref:
