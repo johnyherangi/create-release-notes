@@ -18,6 +18,14 @@ This action compiles the commits between the latest release tag and a head ref i
 
 ## Outputs
 
+### `release-name`
+
+Contains the `subject` of the latest commit in the release notes e.g.
+
+```
+Do more stuff (#2)
+```
+
 ### `release-notes`
 
 Multi-lined release notes e.g.
