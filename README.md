@@ -2,7 +2,7 @@
 
 This action compiles the commits between the latest release tag and a head ref into release notes. For use with [actions/create-release](https://github.com/actions/create-release).
 
--   If no release tags exist, only the HEAD commit will be compiled.
+-   If no release tags exist, only the `head-ref` commit will be compiled.
 
 ## Inputs
 
