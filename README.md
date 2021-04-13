@@ -28,7 +28,7 @@ Multi-lined release notes e.g.
 ## Example usage
 
 ```yaml
-- uses: johnyherangi/release-notes@master
+- uses: johnyherangi/create-release-notes@main
   id: release_notes
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
