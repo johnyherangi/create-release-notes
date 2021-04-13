@@ -10,9 +10,9 @@ inputs:
         required: false
         default: '- {{subject}} by @{{author}}'
 outputs:
-    release_name:
+    release-name:
         description: 'Release name'
-    release_notes:
+    release-notes:
         description: 'Release notes'
 runs:
     using: 'node12'

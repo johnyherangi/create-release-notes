@@ -57,7 +57,7 @@ async function main() {
                     return
                 }
 
-                setOutput('release_name', commits[0].subject)
+                setOutput('release-name', commits[0].subject)
 
                 let releaseNotes = ''
                 for (const commit of commits) {
@@ -68,7 +68,7 @@ async function main() {
                     releaseNotes += '\n'
                 }
 
-                setOutput('release_notes', releaseNotes)
+                setOutput('release-notes', releaseNotes)
             })
             .catch((error) => setFailed(error.message))
     } catch (error) {

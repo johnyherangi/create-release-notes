@@ -13,6 +13,7 @@ This action compiles the commits between the latest release tag and a head ref i
 ### `format`
 
 **Optional** Release note format. Default is `- {{subject}} by @{{author}}`.
+
 > Usable commit values: `subject`, `author` and `message`
 
 ## Outputs
@@ -20,6 +21,7 @@ This action compiles the commits between the latest release tag and a head ref i
 ### `release-notes`
 
 Multi-lined release notes e.g.
+
 ```
 - Do more stuff (#2) by @johnyherangi
 - Do stuff (#1) by @johnyherangi
@@ -29,7 +31,7 @@ Multi-lined release notes e.g.
 
 ```yaml
 - uses: johnyherangi/create-release-notes@main
-  id: release_notes
+  id: create-release-notes
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 - uses: actions/create-release@v1
@@ -38,5 +40,5 @@ Multi-lined release notes e.g.
   with:
       tag_name: '1.0.0'
       release_name: My Release
-      body: ${{ steps.release_notes.outputs.release-notes }}
+      body: ${{ steps.create-release-notes.outputs.release-notes }}
 ```
