@@ -66,6 +66,7 @@ async function main() {
                 for (const commit of commits) {
                     releaseNotes += format
                         .replace('{{author}}', commit.author)
+                        .replace('{{committer}}', commit.committer)
                         .replace('{{subject}}', commit.subject)
                         .replace('{{message}}', commit.message)
                     releaseNotes += '\n'
