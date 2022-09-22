@@ -1,6 +1,6 @@
 {
-    "name": "release-notes",
-    "version": "0.1.0",
+    "name": "create-release-notes",
+    "version": "0.1.1",
     "private": true,
     "description": "GitHub action for generating release notes",
     "main": "lib/main.js",
