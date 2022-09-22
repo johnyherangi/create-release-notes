@@ -20,5 +20,6 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - uses: ./
+              head-ref: ${{ github.sha }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
