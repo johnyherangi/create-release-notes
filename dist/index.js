@@ -2,6 +2,37 @@ require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 42:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.buildReleaseNote = void 0;
+function buildReleaseNote(template, commit) {
+    var _a;
+    let match = null;
+    let result = template;
+    const regex = new RegExp('{{([a-z\\|]+)}}', 'g');
+    while ((match = regex.exec(template)) !== null) {
+        const replacers = match[1].split('|');
+        let value = '';
+        for (const replacer of replacers) {
+            value = (_a = commit[replacer]) !== null && _a !== void 0 ? _a : '';
+            if (value) {
+                const placeholder = match[0];
+                result = result.replace(placeholder, value);
+                break;
+            }
+        }
+    }
+    return result;
+}
+exports.buildReleaseNote = buildReleaseNote;
+
+
+/***/ }),
+
 /***/ 109:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -19,6 +50,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __nccwpck_require__(186);
 const github_1 = __nccwpck_require__(438);
+const buildReleaseNote_1 = __nccwpck_require__(42);
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -50,11 +82,15 @@ function main() {
                 },
             })))
                 .then((response) => response.data.commits
-                .map((commit) => ({
-                author: commit.author.login,
-                subject: commit.commit.message.split('\n')[0],
-                message: commit.commit.message,
-            }))
+                .map((commit) => {
+                var _a, _b;
+                return ({
+                    author: (_a = commit.author) === null || _a === void 0 ? void 0 : _a.login,
+                    committer: (_b = commit.committer) === null || _b === void 0 ? void 0 : _b.login,
+                    subject: commit.commit.message.split('\n')[0],
+                    message: commit.commit.message,
+                });
+            })
                 .reverse())
                 .then((commits) => {
                 if (commits.length === 0) {
@@ -64,10 +100,7 @@ function main() {
                 core_1.setOutput('release-name', commits[0].subject);
                 let releaseNotes = '';
                 for (const commit of commits) {
-                    releaseNotes += format
-                        .replace('{{author}}', commit.author)
-                        .replace('{{subject}}', commit.subject)
-                        .replace('{{message}}', commit.message);
+                    releaseNotes += buildReleaseNote_1.buildReleaseNote(format, commit);
                     releaseNotes += '\n';
                 }
                 core_1.setOutput('release-notes', releaseNotes);

@@ -1,12 +1,7 @@
 import { getInput, setFailed, setOutput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
-
-// Full response schema can be found here: https://docs.github.com/en/rest/commits/commits#list-commits
-type Commit = {
-    author: { login: string } | null
-    committer: { login: string } | null
-    commit: { message: string }
-}
+import { buildReleaseNote } from './buildReleaseNote'
+import { ApiCommit } from './types'
 
 async function main() {
     try {
@@ -40,13 +35,13 @@ async function main() {
                         })
                         .then((response) => ({
                             data: {
-                                commits: [response.data as Commit],
+                                commits: [response.data as ApiCommit],
                             },
                         })),
             )
             .then((response) =>
                 response.data.commits
-                    .map((commit: Commit) => ({
+                    .map((commit: ApiCommit) => ({
                         author: commit.author?.login,
                         committer: commit.committer?.login,
                         subject: commit.commit.message.split('\n')[0],
@@ -64,11 +59,7 @@ async function main() {
 
                 let releaseNotes = ''
                 for (const commit of commits) {
-                    releaseNotes += format
-                        .replace('{{author}}', commit.author)
-                        .replace('{{committer}}', commit.committer)
-                        .replace('{{subject}}', commit.subject)
-                        .replace('{{message}}', commit.message)
+                    releaseNotes += buildReleaseNote(format, commit)
                     releaseNotes += '\n'
                 }
 

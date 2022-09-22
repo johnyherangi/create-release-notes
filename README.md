@@ -16,6 +16,12 @@ This action compiles the commits between the latest release tag and a head ref i
 
 > Usable commit values: `subject`, `author`, `committer` and `message`
 
+Values can also be piped in the event that one commit value is missing e.g.
+
+```
+- {{subject}} by @{{author|committer}}
+```
+
 ## Outputs
 
 ### `release-name`
