@@ -1,8 +1,10 @@
 import { getInput, setFailed, setOutput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
 
+// Full response schema can be found here: https://docs.github.com/en/rest/commits/commits#list-commits
 type Commit = {
-    author: { login: string }
+    author: { login: string } | null
+    committer: { login: string } | null
     commit: { message: string }
 }
 
@@ -45,7 +47,8 @@ async function main() {
             .then((response) =>
                 response.data.commits
                     .map((commit: Commit) => ({
-                        author: commit.author.login,
+                        author: commit.author?.login,
+                        committer: commit.committer?.login,
                         subject: commit.commit.message.split('\n')[0],
                         message: commit.commit.message,
                     }))
