@@ -1,10 +1,7 @@
 import { getInput, setFailed, setOutput } from '@actions/core'
 import { context, getOctokit } from '@actions/github'
-
-type Commit = {
-    author: { login: string }
-    commit: { message: string }
-}
+import { buildReleaseNote } from './buildReleaseNote'
+import { ApiCommit } from './types'
 
 async function main() {
     try {
@@ -38,14 +35,15 @@ async function main() {
                         })
                         .then((response) => ({
                             data: {
-                                commits: [response.data as Commit],
+                                commits: [response.data as ApiCommit],
                             },
                         })),
             )
             .then((response) =>
                 response.data.commits
-                    .map((commit: Commit) => ({
-                        author: commit.author.login,
+                    .map((commit: ApiCommit) => ({
+                        author: commit.author?.login,
+                        committer: commit.committer?.login,
                         subject: commit.commit.message.split('\n')[0],
                         message: commit.commit.message,
                     }))
@@ -61,10 +59,7 @@ async function main() {
 
                 let releaseNotes = ''
                 for (const commit of commits) {
-                    releaseNotes += format
-                        .replace('{{author}}', commit.author)
-                        .replace('{{subject}}', commit.subject)
-                        .replace('{{message}}', commit.message)
+                    releaseNotes += buildReleaseNote(format, commit)
                     releaseNotes += '\n'
                 }
 
