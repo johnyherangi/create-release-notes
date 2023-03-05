@@ -72,7 +72,13 @@ async function main() {
             })
             .catch((error) => setFailed(error.message))
     } catch (error) {
-        setFailed(error.message)
+        if (error instanceof Error) {
+            setFailed(
+                typeof error === 'string' || error instanceof Error
+                    ? error
+                    : 'An unexpected error occurred.',
+            )
+        }
     }
 }
 
