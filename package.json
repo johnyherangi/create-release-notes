@@ -1,6 +1,6 @@
 {
-    "name": "create-release-notes",
-    "version": "1.0.1",
+    "name": "release-notes",
+    "version": "1.0.2",
     "private": true,
     "description": "GitHub action for generating release notes",
     "main": "lib/main.js",
@@ -27,9 +27,8 @@
     },
     "homepage": "https://github.com/actions/release-notes#readme",
     "dependencies": {
-        "@actions/core": "^1.2.6",
-        "@actions/github": "^4.0.0",
-        "@octokit/action": "^4.0.8"
+        "@actions/core": "^1.10.0",
+        "@actions/github": "^4.0.0"
     },
     "devDependencies": {
         "@types/jest": "^27.5.0",
