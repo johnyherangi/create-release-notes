@@ -14,7 +14,13 @@ This action compiles the commits between the latest release tag and a head ref i
 
 **Optional** Release note format. Default is `- {{subject}} by @{{author}}`.
 
-> Usable commit values: `subject`, `author` and `message`
+> Usable commit values: `subject`, `author`, `committer` and `message`
+
+Values can also be piped in the event that one commit value is missing e.g.
+
+```
+- {{subject}} by @{{author|committer}}
+```
 
 ## Outputs
 
